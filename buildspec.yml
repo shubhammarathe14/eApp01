@@ -5,28 +5,22 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
-      # Install dependencies
-      echo Installing dependencies...
-      npm install --legacy-peer-deps
+      - echo Installing dependencies...
+      - npm install --legacy-peer-deps
 
   build:
     commands:
-      # Build Angular application in production mode
-      echo Building the Angular application...
-      npm run build -- --configuration=production --output-path=dist/angular-ecom-main
-
-      # Verify the dist directory exists and contains the build files
-      echo Listing the contents of the dist directory...
-      ls -R dist
+      - echo Building the Angular application...
+      - npm run build -- --configuration=production --output-path=dist/angular-ecom-main
+      - echo Listing the contents of the dist directory...
+      - ls -R dist
 
   post_build:
     commands:
-      # Upload the built files to the S3 bucket
-      echo Deploying to S3...
-      aws s3 sync dist/angular-ecom-main/ s3://ecom-app-artifacts/dist-angular-ecom-main/
+      - echo Deploying to S3...
+      - aws s3 sync dist/angular-ecom-main/ s3://ecom-app-artifacts/dist-angular-ecom-main/
 
 artifacts:
   files:
     - '**/*'
   base-directory: dist/angular-ecom-main
-
