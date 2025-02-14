@@ -1,0 +1,35 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+      nodejs: 18
+    commands:
+      # Install dependencies
+      echo Installing dependencies...
+      npm install --legacy-peer-deps
+
+  build:
+    commands:
+      # Build the Angular application in production mode
+      echo Building the Angular application...
+      npm run build -- --configuration=production --output-path=dist/angular-ecom-main
+
+      # Build Docker image
+      echo Building Docker image...
+      docker build -t angular-ecom-app .
+
+  post_build:
+    commands:
+      # Run tests or other post-build tasks if necessary
+      echo Build completed successfully.
+      echo Listing files...
+      ls -la dist/angular-ecom-main
+
+artifacts:
+  files:
+    - dist/angular-ecom-main/**
+    - db.json
+  base-directory: dist/angular-ecom-main
+
