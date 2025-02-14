@@ -30,5 +30,3 @@ artifacts:
     - '**/*'
   base-directory: dist/angular-ecom-main
 
-
-
