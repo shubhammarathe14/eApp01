@@ -19,7 +19,7 @@ phases:
     commands:
       # Upload the built files to the S3 bucket
       echo Deploying to S3...
-      aws s3 sync dist/angular-ecom-main/ s3://your-s3-bucket-name --delete
+      aws s3 sync dist/angular-ecom-main/ s3://ecom-app-artifacts/dist-angular-ecom-main/
 
 artifacts:
   files:
