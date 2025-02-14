@@ -15,6 +15,10 @@ phases:
       echo Building the Angular application...
       npm run build -- --configuration=production --output-path=dist/angular-ecom-main
 
+      # Verify the dist directory exists and contains the build files
+      echo Listing the contents of the dist directory...
+      ls -R dist
+
   post_build:
     commands:
       # Upload the built files to the S3 bucket
@@ -25,5 +29,6 @@ artifacts:
   files:
     - '**/*'
   base-directory: dist/angular-ecom-main
+
 
 
