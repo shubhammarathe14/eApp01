@@ -3,7 +3,6 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      docker: 18
       nodejs: 18
     commands:
       # Install dependencies
@@ -12,24 +11,19 @@ phases:
 
   build:
     commands:
-      # Build the Angular application in production mode
+      # Build Angular application in production mode
       echo Building the Angular application...
       npm run build -- --configuration=production --output-path=dist/angular-ecom-main
 
-      # Build Docker image
-      echo Building Docker image...
-      docker build -t angular-ecom-app .
-
   post_build:
     commands:
-      # Run tests or other post-build tasks if necessary
-      echo Build completed successfully.
-      echo Listing files...
-      ls -la dist/angular-ecom-main
+      # Upload the built files to the S3 bucket
+      echo Deploying to S3...
+      aws s3 sync dist/angular-ecom-main/ s3://your-s3-bucket-name --delete
 
 artifacts:
   files:
-    - dist/angular-ecom-main/**
-    - db.json
+    - '**/*'
   base-directory: dist/angular-ecom-main
+
 
