@@ -4,17 +4,16 @@ frontend:
     preBuild:
       commands:
         - echo "Installing dependencies..."
-        - npm ci  # Installs dependencies based on package-lock.json
-        - npm install -g @angular/cli  # Ensure Angular CLI is globally installed
+        - npm ci
+        - npm install -g @angular/cli || exit 1  # Explicitly handle installation errors
         - echo "Angular CLI installed successfully!"
 
     build:
       commands:
         - echo "Checking Angular CLI installation..."
-        - ng version  # Ensure Angular CLI is installed
+        - ng version || exit 1  # Fail explicitly if Angular CLI is not found
         - echo "Building Angular application..."
-        - ng build --configuration=production --output-path=dist/angular-app
-
+        - ng build --configuration=production --output-path=dist/angular-app || exit 1
   artifacts:
     baseDirectory: dist/angular-app
     files:
