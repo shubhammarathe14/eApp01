@@ -1,29 +1,27 @@
 version: 1
 frontend:
   phases:
-    install:
-      runtime-versions:
-        nodejs: 18  # Ensure Node.js 18 is used
+    preBuild:
       commands:
         - echo "Installing dependencies..."
-        - npm install --legacy-peer-deps
-        - echo "Installing Angular CLI locally..."
-        - npm install @angular/cli@15.2.6  # Install Angular CLI locally
+        - npm ci  # Faster installation using package-lock.json
+        - npm install -g @angular/cli  # Ensure Angular CLI is available globally
 
     build:
       commands:
         - echo "Checking Angular CLI installation..."
-        - npx ng version  # Use npx to execute Angular CLI
-        - echo "Building Angular project..."
-        - npx ng build --configuration=production --output-path=dist/angular-ecom-main
+        - ng version  # Verify CLI is installed
+        - echo "Building Angular application..."
+        - ng build --configuration=production --output-path=dist/angular-ecom-main
 
   artifacts:
-    baseDirectory: dist/angular-ecom-main  # Ensure this matches your Angular output folder
+    baseDirectory: dist/angular-ecom-main
     files:
       - "**/*"
 
   cache:
     paths:
       - node_modules/**  
+
 
 
