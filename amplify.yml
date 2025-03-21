@@ -3,25 +3,19 @@ frontend:
   phases:
     preBuild:
       commands:
-        - echo "Installing dependencies..."
-        - npm ci
-        - npm install -g @angular/cli || exit 1  # Explicitly handle installation errors
-        - echo "Angular CLI installed successfully!"
-
+        - npm install -g @angular/cli  # ✅ Install Angular CLI
+        - npm install  # ✅ Install project dependencies
     build:
       commands:
-        - echo "Checking Angular CLI installation..."
-        - ng version || exit 1  # Fail explicitly if Angular CLI is not found
-        - echo "Building Angular application..."
-        - ng build --configuration=production --output-path=dist/angular-app || exit 1
+        - ng build --configuration=production  # ✅ Build Angular project
   artifacts:
-    baseDirectory: dist/angular-app
+    baseDirectory: dist
     files:
-      - "**/*"
-
+      - '**/*'
   cache:
     paths:
-      - node_modules/**  
+      - node_modules/**/*
+ 
 
 
 
