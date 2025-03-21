@@ -3,18 +3,27 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm install -g @angular/cli  # ✅ Install Angular CLI
-        - npm install  # ✅ Install project dependencies
+        - nvm use 18  # Set Node.js version
+        - npm install --legacy-peer-deps
     build:
       commands:
-        - ng build --configuration=production  # ✅ Build Angular project
+        - npm run build -- --configuration=production --output-path=dist/angular-ecom-main
+        - ls -R dist  # Verify build output
+  postBuild:
+    commands:
+      - aws s3 sync dist/angular-ecom-main/ s3://ecom-app-artifacts/dist-angular-ecom-main/
   artifacts:
-    baseDirectory: dist
+    baseDirectory: dist/angular-ecom-main
     files:
       - '**/*'
   cache:
     paths:
       - node_modules/**/*
+  environment:
+    variables:
+      - NODE_ENV: production
+      - NODE_OPTIONS: --max_old_space_size=4096
+
  
 
 
