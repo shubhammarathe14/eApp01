@@ -4,24 +4,26 @@ frontend:
     preBuild:
       commands:
         - echo "Installing dependencies..."
-        - npm ci  # Faster installation using package-lock.json
-        - npm install -g @angular/cli  # Ensure Angular CLI is available globally
+        - npm ci  # Installs dependencies based on package-lock.json
+        - npm install -g @angular/cli  # Ensure Angular CLI is globally installed
+        - echo "Angular CLI installed successfully!"
 
     build:
       commands:
         - echo "Checking Angular CLI installation..."
-        - ng version  # Verify CLI is installed
+        - ng version  # Ensure Angular CLI is installed
         - echo "Building Angular application..."
-        - ng build --configuration=production --output-path=dist/angular-ecom-main
+        - ng build --configuration=production --output-path=dist/angular-app
 
   artifacts:
-    baseDirectory: dist/angular-ecom-main
+    baseDirectory: dist/angular-app
     files:
       - "**/*"
 
   cache:
     paths:
       - node_modules/**  
+
 
 
 
